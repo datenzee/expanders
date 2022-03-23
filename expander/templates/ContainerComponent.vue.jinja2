@@ -1,0 +1,28 @@
+<script setup lang="ts">
+import * as $rdf from 'rdflib'
+{% for component in children -%}
+import {{ component }} from './{{ component }}.vue'
+{% endfor %}
+
+// <custom-imports>
+// </custom-imports>
+
+
+const props = defineProps([
+    'graph',
+    'depth',
+    'object',
+    // <custom-props>
+    // </custom-props>
+])
+
+// <custom-code>
+// </custom-code>
+</script>
+<template>
+    <div>
+        {% for component in children -%}
+        <{{ component }} :graph="graph" :depth="depth + 1" :object="object" />
+        {% endfor %}
+    </div>
+</template>

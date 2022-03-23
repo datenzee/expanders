@@ -1,0 +1,24 @@
+<script setup lang="ts">
+import * as $rdf from 'rdflib'
+
+import TitleComponent from '@/components/duo/TitleComponent.vue'
+// <custom-imports>
+// </custom-imports>
+
+
+const props = defineProps([
+    'graph',
+    'depth',
+    'object',
+    // <custom-props>
+    // </custom-props>
+])
+
+
+const predicate = $rdf.sym('{{ predicate }}')
+// <custom-code>
+// </custom-code>
+</script>
+<template>
+    <TitleComponent :graph="graph" :depth="depth" :object="object" :predicate="predicate" />
+</template>

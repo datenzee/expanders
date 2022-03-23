@@ -1,0 +1,19 @@
+<script setup lang="ts">
+import Heading from '@/components/duo/Heading.vue'
+// <custom-imports>
+// </custom-imports>
+
+const props = defineProps([
+    'graph',
+    'depth',
+    'object',
+    // <custom-props>
+    // </custom-props>
+])
+
+// <custom-code>
+// </custom-code>
+</script>
+<template>
+    <Heading :depth="depth" text="{{ content }}" />
+</template>

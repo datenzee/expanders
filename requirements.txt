@@ -1,0 +1,4 @@
+click==8.0.4
+Jinja2==3.0.3
+rdflib==6.1.1
+stringcase==1.2.0
