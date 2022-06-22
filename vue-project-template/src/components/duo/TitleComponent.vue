@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import * as $rdf from 'rdflib'
 import Heading from './Heading.vue'
 
