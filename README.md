@@ -11,6 +11,5 @@ $ make install
 ```
 $ expander <path-to-owl> <path-to-out-dir>
 $ cd <path-to-out-dir>
-$ npm install
 $ npm run dev
 ```
