@@ -39,6 +39,9 @@ class Expander:
         with open(file_name, mode='w') as file:
             file.write(template.render(**component.template_data()))
 
-    def post_expand(self):
+    def post_expand(self, dev=False):
         subprocess.check_call('npm install', shell=True, cwd=self.output_dir)
-        subprocess.check_call('npm run build', shell=True, cwd=self.output_dir)
+        if dev:
+            subprocess.check_call('npm run dev', shell=True, cwd=self.output_dir)
+        else:
+            subprocess.check_call('npm run build', shell=True, cwd=self.output_dir)
