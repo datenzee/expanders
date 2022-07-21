@@ -1,9 +1,7 @@
 <script setup>
-import * as $rdf from 'rdflib'
 {% for component in children -%}
 import {{ component }} from './{{ component }}.vue'
 {% endfor %}
-
 // <custom-imports>
 // </custom-imports>
 

@@ -1,4 +1,7 @@
 <script setup>
+{% if predicate -%}
+import * as $rdf from 'rdflib'
+{%- endif  %}
 import Heading from '@/components/duo/Heading.vue'
 // <custom-imports>
 // </custom-imports>
@@ -11,9 +14,17 @@ const props = defineProps([
     // </custom-props>
 ])
 
+{% if predicate %}
+const predicate = $rdf.sym('{{ predicate }}')
+{% endif %}
+
 // <custom-code>
 // </custom-code>
 </script>
 <template>
-    <Heading :depth="depth" text="{{ content }}" />
+    {% if predicate -%}
+    <Heading :depth="depth" :text="{{ 'graph?.match(object, predicate)[0]?.object.value' }}" />
+    {%- else -%}
+    <Heading :depth="depth" text="{{ text }}" />
+    {%- endif %}
 </template>

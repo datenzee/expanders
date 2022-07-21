@@ -1,4 +1,4 @@
-from expander.core.duo.Component import Component
+from expander.core.duio.Component import Component
 
 
 class ContainerComponent(Component):

@@ -1,12 +1,11 @@
 from rdflib import Namespace, Graph
 
-from expander.core.duo.ContainerComponent import ContainerComponent
-from expander.core.duo.HeadingComponent import HeadingComponent
-from expander.core.duo.IterativeContainerComponent import IterativeContainerComponent
-from expander.core.duo.ParagraphComponent import ParagraphComponent
-from expander.core.duo.TitleComponent import TitleComponent
+from expander.core.duio.ContainerComponent import ContainerComponent
+from expander.core.duio.HeadingComponent import HeadingComponent
+from expander.core.duio.IterativeContainerComponent import IterativeContainerComponent
+from expander.core.duio.ParagraphComponent import ParagraphComponent
 
-DUO = Namespace('http://www.semanticweb.org/janslifka/ontologies/2022/2/datenzee-ui-ontology#')
+DUIO = Namespace('http://purl.org/datenzee/ui-ontology#')
 RDF = Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
 
 
@@ -26,9 +25,9 @@ class Loader:
             pass
 
     def _load(self):
-        app = next(self.graph.subjects(RDF.type, DUO.App))
+        app = next(self.graph.subjects(RDF.type, DUIO.App))
 
-        root_component = next(self.graph.objects(app, DUO.rootComponent))
+        root_component = next(self.graph.objects(app, DUIO.rootComponent))
 
         self._create_component(root_component)
 
@@ -39,15 +38,15 @@ class Loader:
         component_name = component.split('#')[-1]
         component_types = list(self.graph.objects(component, RDF.type))
 
-        if DUO.Container in component_types:
+        if DUIO.Container in component_types:
             children = []
-            child = next(self.graph.objects(component, DUO.containerContains))
+            child = next(self.graph.objects(component, DUIO.containerContains))
 
             while child:
-                child_component = next(self.graph.objects(child, DUO.containerListFirst))
+                child_component = next(self.graph.objects(child, DUIO.containerListFirst))
                 children.append(self._create_component(child_component))
 
-                rest = list(self.graph.objects(child, DUO.containerListRest))
+                rest = list(self.graph.objects(child, DUIO.containerListRest))
                 if len(rest) > 0:
                     child = rest[0]
                 else:
@@ -55,26 +54,34 @@ class Loader:
 
             created_component = ContainerComponent(component_name, children)
 
-        elif DUO.IterativeContainer in component_types:
-            predicate = next(self.graph.objects(component, DUO.iterativeContainerPredicate))
-            content = next(self.graph.objects(component, DUO.iterativeContainerContent))
+        elif DUIO.IterativeContainer in component_types:
+            predicate = next(self.graph.objects(component, DUIO.iterativeContainerPredicate))
+            content = next(self.graph.objects(component, DUIO.iterativeContainerContent))
             content_component = self._create_component(content)
             created_component = IterativeContainerComponent(component_name, content_component, predicate)
 
-        elif DUO.TitleComponent in component_types:
-            title_predicate = next(self.graph.objects(component, DUO.titleComponentPredicate))
-            created_component = TitleComponent(component_name, title_predicate)
+        elif DUIO.HeadingComponent in component_types:
+            predicate = self._load_content_component_predicate(component)
+            text = self._load_content_component_text(component)
+            created_component = HeadingComponent(component_name, predicate, text)
 
-        elif DUO.HeadingComponent in component_types:
-            content = next(self.graph.objects(component, DUO.plainTextComponentContent))
-            created_component = HeadingComponent(component_name, content)
-
-        elif DUO.ParagraphComponent in component_types:
-            content = next(self.graph.objects(component, DUO.plainTextComponentContent))
-            created_component = ParagraphComponent(component_name, content)
+        elif DUIO.ParagraphComponent in component_types:
+            predicate = self._load_content_component_predicate(component)
+            text = self._load_content_component_text(component)
+            created_component = ParagraphComponent(component_name, predicate, text)
 
         else:
             raise AttributeError(f'Unknown component type: {component_types}')
 
         self.components.append(created_component)
         return created_component
+
+    def _load_content_component_predicate(self, component):
+        for predicate in self.graph.objects(component, DUIO.contentComponentPredicate):
+            return predicate
+        return None
+
+    def _load_content_component_text(self, component):
+        for component_content in self.graph.objects(component, DUIO.contentComponentContent):
+            return next(self.graph.objects(component_content, DUIO.textContentValue))
+        return None
