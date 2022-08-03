@@ -8,10 +8,10 @@ from .loader import Loader
 
 
 class Expander:
-    def __init__(self, input_file, output_dir):
+    def __init__(self, output_dir, input_source=None, input_data=None):
         self.output_dir = output_dir
         self.components_output_dir = path.join(output_dir, 'src', 'components', 'gen')
-        self.loader = Loader(input_file)
+        self.loader = Loader(source=input_source, data=input_data)
 
     def expand(self):
         self._clean_output_dir()

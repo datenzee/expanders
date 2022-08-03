@@ -10,15 +10,16 @@ RDF = Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
 
 
 class Loader:
-    def __init__(self, file):
-        self.file = file
+    def __init__(self, source=None, data=None):
+        self.source = source
+        self.data = data
         self.graph = None
         self.components = []
 
     def load(self):
         g = Graph()
         try:
-            g.parse(self.file, format='turtle')
+            g.parse(source=self.source, data=self.data, format='turtle')
             self.graph = g
             self._load()
         except FileNotFoundError:

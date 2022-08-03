@@ -1,0 +1,60 @@
+import glob
+import mimetypes
+import tempfile
+from os import path, getenv
+from pathlib import Path
+
+from dotenv import load_dotenv
+from flask import Flask, request, jsonify
+from minio import Minio
+
+from expander.core.expander import Expander
+
+load_dotenv()
+
+app = Flask(__name__)
+
+s3_public_url = getenv('S3_PUBLIC_URL')
+s3_server = getenv('S3_SERVER')
+s3_bucket = getenv('S3_BUCKET')
+s3_access_key = getenv('S3_ACCESS_KEY')
+s3_secret_key = getenv('S3_SECRET_KEY')
+
+
+def get_endpoint(url):
+    parts = url.split('://', maxsplit=1)
+    return parts[0] if len(parts) == 1 else parts[1]
+
+
+@app.route('/expand', methods=['POST'])
+def expand():
+    data = request.json
+    template_editor_id = data['template_editor_id']
+
+    with tempfile.TemporaryDirectory() as tmpdirname:
+        expander = Expander(tmpdirname, input_data=data['content'])
+        expander.expand()
+        expander.post_expand()
+
+        client = Minio(
+            get_endpoint(s3_server),
+            access_key=s3_access_key,
+            secret_key=s3_secret_key,
+            secure=s3_server.startswith('https://')
+        )
+
+        for file in glob.iglob(path.join(tmpdirname, 'dist', '**'), recursive=True):
+            if path.isfile(file):
+                content_type = get_content_type(file)
+                client.fput_object(s3_bucket, f"{template_editor_id}/{Path(file).name}", file,
+                                   content_type=content_type)
+
+    response = {'url': f'{s3_public_url}/{s3_bucket}/{template_editor_id}/index.html'}
+    return jsonify(response)
+
+
+def get_content_type(file):
+    mt = mimetypes.guess_type(file)
+    if mt:
+        return mt[0]
+    return 'application/octet-stream'

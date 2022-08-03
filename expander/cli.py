@@ -10,7 +10,7 @@ from expander.core.expander import Expander
 @click.option('-e', '--expand-only', is_flag=True)
 def main(input_file, output_dir, dev, expand_only):
     print(f'Expanding {input_file} into {output_dir}')
-    expander = Expander(input_file, output_dir)
+    expander = Expander(output_dir, input_source=input_file)
     expander.expand()
     if not expand_only:
         expander.post_expand(dev)
