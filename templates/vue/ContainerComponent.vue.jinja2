@@ -18,9 +18,10 @@ const props = defineProps([
 // </custom-code>
 </script>
 <template>
-    <div>
+    {% set elem = 'div' if is_block else 'span' -%}
+    <{{ elem }}>
         {% for component in children -%}
         <{{ component }} :graph="graph" :depth="depth + 1" :object="object" />
         {% endfor %}
-    </div>
+    </{{ elem }}>
 </template>

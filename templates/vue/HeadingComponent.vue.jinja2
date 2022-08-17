@@ -23,8 +23,8 @@ const predicate = $rdf.sym('{{ predicate }}')
 </script>
 <template>
     {% if predicate -%}
-    <Heading :depth="depth" :text="{{ 'graph?.match(object, predicate)[0]?.object.value' }}" />
+    <Heading :depth="depth" :text="{{ 'graph?.match(object, predicate)[0]?.object.value' }}" {{ '' if is_block else 'style="display: inline"'  }} />
     {%- else -%}
-    <Heading :depth="depth" text="{{ text }}" />
+    <Heading :depth="depth" text="{{ text }}" {{ '' if is_block else 'style="display: inline"'  }} />
     {%- endif %}
 </template>

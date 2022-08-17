@@ -4,8 +4,8 @@ from expander.shared.duio.Component import Component
 
 
 class ContentComponent(Component):
-    def __init__(self, name, predicate=None, text=None):
-        super().__init__(name)
+    def __init__(self, name, is_block, predicate=None, text=None):
+        super().__init__(name, is_block)
         self.predicate = predicate
         self.text = text
 
@@ -17,7 +17,7 @@ class ContentComponent(Component):
         return 'ContentComponent'
 
     def template_data(self):
-        return {
+        return super().template_data() | {
             'predicate': self.predicate,
             'text': self.text,
             'element': self.element()

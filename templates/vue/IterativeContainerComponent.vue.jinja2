@@ -21,7 +21,8 @@ const predicate = $rdf.sym('{{ predicate }}')
 // </custom-code>
 </script>
 <template>
-    <div>
+    {% set elem = 'div' if is_block else 'span' -%}
+    <{{ elem }}>
         <IterativeContainer
             :graph="graph"
             :depth="depth"
@@ -31,5 +32,5 @@ const predicate = $rdf.sym('{{ predicate }}')
         >
             <{{ content_component }} :graph="graph" :depth="slotProps.depth" :object="slotProps.object" />
         </IterativeContainer>
-    </div>
+    </{{ elem }}>
 </template>
