@@ -1,4 +1,4 @@
-# Datenzee Vue Web App Expander
+# Datenzee Expanders
 
 ## Installation
 
@@ -11,13 +11,18 @@ $ make install
 Expand and build the application:
 
 ```
-$ expander <path-to-owl> <path-to-out-dir>
+$ expander <type> <path-to-owl> <path-to-out-dir>
 ```
+
+Where type can be
+
+- `vue`
+- `doc`
 
 Expand and run dev mode:
 
 ```
-$ expander --dev <path-to-owl> <path-to-out-dir>
+$ expander --dev <type> <path-to-owl> <path-to-out-dir>
 ```
 
 By default the application is running on http://localhost:8081/.

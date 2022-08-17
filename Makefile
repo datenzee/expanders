@@ -1,4 +1,4 @@
-DOCKER_IMAGE=docker.ds-wizard.org/vue-web-app-expander-server
+DOCKER_IMAGE=docker.ds-wizard.org/template-editor-expander-server
 
 .PHONY: install
 install:
