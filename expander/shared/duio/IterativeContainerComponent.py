@@ -1,4 +1,4 @@
-from expander.core.duio.Component import Component
+from expander.shared.duio.Component import Component
 
 
 class IterativeContainerComponent(Component):

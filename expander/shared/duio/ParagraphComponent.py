@@ -1,4 +1,4 @@
-from expander.core.duio.ContentComponent import ContentComponent
+from expander.shared.duio.ContentComponent import ContentComponent
 
 
 class ParagraphComponent(ContentComponent):

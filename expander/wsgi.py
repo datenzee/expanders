@@ -5,10 +5,11 @@ from os import path, getenv
 from pathlib import Path
 
 from dotenv import load_dotenv
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, abort
 from minio import Minio
 
-from expander.core.expander import Expander
+from expander.doc.expander import DocExpander
+from expander.vue.expander import VueExpander
 
 load_dotenv()
 
@@ -30,11 +31,19 @@ def get_endpoint(url):
 def expand():
     data = request.json
     template_editor_id = data['template_editor_id']
+    expander_type = data['expander_type']
 
     with tempfile.TemporaryDirectory() as tmpdirname:
-        expander = Expander(tmpdirname, input_data=data['content'])
-        expander.expand()
-        expander.post_expand()
+        if expander_type == 'vue':
+            expander = VueExpander(tmpdirname, input_data=data['content'])
+            expander.expand()
+            expander.post_expand()
+        elif expander_type == 'doc':
+            expander = DocExpander(tmpdirname, input_data=data['content'])
+            expander.expand()
+            expander.post_expand()
+        else:
+            abort(400, 'Not a valid expander type. Allowed types are: vue, doc')
 
         client = Minio(
             get_endpoint(s3_server),

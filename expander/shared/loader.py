@@ -1,9 +1,9 @@
 from rdflib import Namespace, Graph
 
-from expander.core.duio.ContainerComponent import ContainerComponent
-from expander.core.duio.HeadingComponent import HeadingComponent
-from expander.core.duio.IterativeContainerComponent import IterativeContainerComponent
-from expander.core.duio.ParagraphComponent import ParagraphComponent
+from expander.shared.duio.ContainerComponent import ContainerComponent
+from expander.shared.duio.HeadingComponent import HeadingComponent
+from expander.shared.duio.IterativeContainerComponent import IterativeContainerComponent
+from expander.shared.duio.ParagraphComponent import ParagraphComponent
 
 DUIO = Namespace('http://purl.org/datenzee/ui-ontology#')
 RDF = Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')

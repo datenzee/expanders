@@ -3,11 +3,11 @@ import shutil
 import subprocess
 from os import path
 
-from expander.core.templates import load_component_template
-from .loader import Loader
+from expander.shared.loader import Loader
+from expander.vue.templates import load_component_template
 
 
-class Expander:
+class VueExpander:
     def __init__(self, output_dir, input_source=None, input_data=None):
         self.output_dir = output_dir
         self.components_output_dir = path.join(output_dir, 'src', 'components', 'gen')
