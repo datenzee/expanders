@@ -21,7 +21,7 @@ const predicate = $rdf.sym('{{ predicate }}')
 // </custom-code>
 </script>
 <template>
-    <{{ element }}>
+    <{{ element }}{%- if is_block %} style="display: block"{%-  endif -%}>
         {%- if predicate -%}
             {{ '{{ graph?.match(object, predicate)[0]?.object.value }}' }}
         {%- else -%}

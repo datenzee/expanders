@@ -1,8 +1,10 @@
 from rdflib import Namespace, Graph
 
 from expander.shared.duio.ContainerComponent import ContainerComponent
+from expander.shared.duio.EmphasisComponent import EmphasisComponent
 from expander.shared.duio.HeadingComponent import HeadingComponent
 from expander.shared.duio.IterativeContainerComponent import IterativeContainerComponent
+from expander.shared.duio.StrongComponent import StrongComponent
 from expander.shared.duio.TextComponent import TextComponent
 
 DUIO = Namespace('http://purl.org/datenzee/ui-ontology#')
@@ -40,6 +42,9 @@ class Loader:
         component_types = list(self.graph.objects(component, RDF.type))
         component_is_block = next(self.graph.objects(component, DUIO.componentIsBlock))
 
+        create_content_component = lambda constructor: self._create_content_component(
+            component, constructor, component_name, component_is_block)
+
         if DUIO.Container in component_types:
             children = []
             child = next(self.graph.objects(component, DUIO.containerContains))
@@ -60,23 +65,31 @@ class Loader:
             predicate = next(self.graph.objects(component, DUIO.iterativeContainerPredicate))
             content = next(self.graph.objects(component, DUIO.iterativeContainerContent))
             content_component = self._create_component(content)
-            created_component = IterativeContainerComponent(component_name, component_is_block, content_component, predicate)
+            created_component = IterativeContainerComponent(component_name, component_is_block, content_component,
+                                                            predicate)
 
         elif DUIO.HeadingComponent in component_types:
-            predicate = self._load_content_component_predicate(component)
-            text = self._load_content_component_text(component)
-            created_component = HeadingComponent(component_name, component_is_block, predicate, text)
+            created_component = create_content_component(HeadingComponent)
 
         elif DUIO.TextComponent in component_types:
-            predicate = self._load_content_component_predicate(component)
-            text = self._load_content_component_text(component)
-            created_component = TextComponent(component_name, component_is_block, predicate, text)
+            created_component = create_content_component(TextComponent)
+
+        elif DUIO.StrongComponent in component_types:
+            created_component = create_content_component(StrongComponent)
+
+        elif DUIO.EmphasisComponent in component_types:
+            created_component = create_content_component(EmphasisComponent)
 
         else:
             raise AttributeError(f'Unknown component type: {component_types}')
 
         self.components.append(created_component)
         return created_component
+
+    def _create_content_component(self, component, constructor, name, is_block):
+        predicate = self._load_content_component_predicate(component)
+        text = self._load_content_component_text(component)
+        return constructor(name, is_block, predicate, text)
 
     def _load_content_component_predicate(self, component):
         for predicate in self.graph.objects(component, DUIO.contentComponentPredicate):
