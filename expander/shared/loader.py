@@ -1,5 +1,6 @@
 from rdflib import Namespace, Graph
 
+from expander.shared.duio.ConditionComponent import ConditionComponent
 from expander.shared.duio.ContainerComponent import ContainerComponent
 from expander.shared.duio.EmphasisComponent import EmphasisComponent
 from expander.shared.duio.HeadingComponent import HeadingComponent
@@ -67,6 +68,19 @@ class Loader:
             content_component = self._create_component(content)
             created_component = IterativeContainerComponent(component_name, component_is_block, content_component,
                                                             predicate)
+
+        elif DUIO.ConditionComponent in component_types:
+            predicate = next(self.graph.objects(component, DUIO.conditionComponentPredicate))
+            value = next(self.graph.objects(component, DUIO.conditionComponentValue))
+            positive_content = next(self.graph.objects(component, DUIO.conditionComponentPositiveContent))
+            negative_content = next(self.graph.objects(component, DUIO.conditionComponentNegativeContent))
+
+            positive_content_component = self._create_component(positive_content)
+            negative_content_component = self._create_component(negative_content)
+
+            created_component = ConditionComponent(component_name, component_is_block, predicate, value,
+                                                   positive_content_component, negative_content_component)
+
 
         elif DUIO.HeadingComponent in component_types:
             created_component = create_content_component(HeadingComponent)
