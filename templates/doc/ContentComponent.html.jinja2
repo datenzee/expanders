@@ -1,0 +1,31 @@
+{#<script setup>#}
+{#{%- if predicate %}#}
+{#import * as $rdf from 'rdflib'#}
+{#{%- endif  %}#}
+{#// <custom-imports>#}
+{#// </custom-imports>#}
+{##}
+{##}
+{#const props = defineProps([#}
+{#    'graph',#}
+{#    'depth',#}
+{#    'object',#}
+{#    // <custom-props>#}
+{#    // </custom-props>#}
+{#])#}
+{##}
+{#{% if predicate %}#}
+{#const predicate = $rdf.sym('{{ predicate }}')#}
+{#{% endif %}#}
+{#// <custom-code>#}
+{#// </custom-code>#}
+{#</script>#}
+{#<template>#}
+{#    <{{ element }}{%- if is_block %} style="display: block"{%-  endif -%}>#}
+{#        {%- if predicate -%}#}
+{#            {{ '{{ graph?.match(object, predicate)[0]?.object.value }}' }}#}
+{#        {%- else -%}#}
+{#            {{ text }}#}
+{#        {%- endif -%}#}
+{#    </{{ element }}>#}
+{#</template>#}

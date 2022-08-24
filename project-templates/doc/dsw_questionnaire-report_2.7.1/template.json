@@ -1,0 +1,140 @@
+{
+    "templateId": "questionnaire-report",
+    "organizationId": "dsw",
+    "version": "2.7.1",
+    "name": "Questionnaire Report",
+    "description": "Exported questions and answers from a questionnaire",
+    "license": "Apache-2.0",
+    "metamodelVersion": 10,
+    "recommendedPackageId": null,
+    "allowedPackages": [
+        {
+            "orgId": null,
+            "kmId": null,
+            "minVersion": null,
+            "maxVersion": null
+        }
+    ],
+    "formats": [
+        {
+            "uuid": "d3e98eb6-344d-481f-8e37-6a67b6cd1ad2",
+            "name": "JSON Data",
+            "shortName": "json",
+            "icon": "far fa-file",
+            "color": "#f15a24",
+            "steps": [
+                {
+                    "name": "json",
+                    "options": {}
+                }
+            ]
+        },
+        {
+            "uuid": "a9293d08-59a4-4e6b-ae62-7a6a570b031c",
+            "name": "HTML Document",
+            "shortName": "html",
+            "icon": "far fa-file-code",
+            "color": "#f15a24",
+            "steps": [
+                {
+                    "name": "jinja",
+                    "options": {
+                        "content-type": "text/html",
+                        "extension": "html",
+                        "template": "src/default.html.j2"
+                    }
+                }
+            ]
+        },
+        {
+            "uuid": "68c26e34-5e77-4e15-9bf7-06ff92582257",
+            "name": "PDF Document",
+            "shortName": "pdf",
+            "icon": "far fa-file-pdf",
+            "color": "#f15a24",
+            "steps": [
+                {
+                    "name": "jinja",
+                    "options": {
+                        "content-type": "text/html",
+                        "extension": "html",
+                        "template": "src/default.html.j2"
+                    }
+                },
+                {
+                    "name": "wkhtmltopdf",
+                    "options": {
+                        "args": "--disable-smart-shrinking -B 20mm -L 20mm -R 20mm -T 25mm"
+                    }
+                }
+            ]
+        },
+        {
+            "uuid": "dbc94579-40d7-42c3-975c-71e30d07778b",
+            "name": "LaTeX Document",
+            "shortName": "latex",
+            "icon": "far fa-file-alt",
+            "color": "#f15a24",
+            "steps": [
+                {
+                    "name": "jinja",
+                    "options": {
+                        "content-type": "text/x-tex",
+                        "extension": "tex",
+                        "template": "src/default.tex.j2"
+                    }
+                }
+            ]
+        },
+        {
+            "uuid": "f4bd941a-dfbe-4226-a1fc-200fb5269311",
+            "name": "MS Word Document",
+            "shortName": "docx",
+            "icon": "far fa-file-word",
+            "color": "#f15a24",
+            "steps": [
+                {
+                    "name": "jinja",
+                    "options": {
+                        "content-type": "text/html",
+                        "extension": "html",
+                        "template": "src/for-word.html.j2"
+                    }
+                },
+                {
+                    "name": "pandoc",
+                    "options": {
+                        "args": "--filter=pandoc-docx-pagebreakpy --reference-doc=src/reference.docx",
+                        "to": "docx",
+                        "from": "html"
+                    }
+                }
+            ]
+        },
+        {
+            "uuid": "f0533e48-f4c5-4af2-b2c1-5a47d4a247c0",
+            "name": "Markdown Document",
+            "shortName": "md",
+            "icon": "far fa-file-alt",
+            "color": "#f15a24",
+            "steps": [
+                {
+                    "name": "jinja",
+                    "options": {
+                        "content-type": "text/html",
+                        "extension": "md",
+                        "template": "src/default.md.j2"
+                    }
+                }
+            ]
+        }
+    ],
+    "_tdk": {
+        "version": "3.14.1",
+        "readmeFile": "README.md",
+        "files": [
+            "src/*",
+            "src/components/gen/*"
+        ]
+    }
+}

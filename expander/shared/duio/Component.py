@@ -7,4 +7,4 @@ class Component:
         return self.__class__.__name__
 
     def template_data(self):
-        return { 'is_block': self.is_block }
+        return {'componentName': self.name, 'is_block': self.is_block}
