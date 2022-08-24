@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "buffer": "^6.0.3",
+    "moment": "^2.29.4",
     "rdflib": "^2.2.19",
     "vue": "^3.2.37",
     "vue-loader": "^17.0.0"

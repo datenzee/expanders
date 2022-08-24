@@ -16,6 +16,20 @@ main *:first-child {
     margin-top: 0;
 }
 
+.block {
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.inline {
+    display: inline;
+    margin-bottom: 0;
+}
+
 .text-danger {
     color: #c00;
+}
+
+a {
+    color: #08d;
 }

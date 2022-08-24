@@ -2,11 +2,16 @@ from rdflib import Namespace, Graph
 
 from expander.shared.duio.ConditionComponent import ConditionComponent
 from expander.shared.duio.ContainerComponent import ContainerComponent
+from expander.shared.duio.DateComponent import DateComponent
+from expander.shared.duio.DateTimeComponent import DateTimeComponent
+from expander.shared.duio.EmailComponent import EmailComponent
 from expander.shared.duio.EmphasisComponent import EmphasisComponent
 from expander.shared.duio.HeadingComponent import HeadingComponent
 from expander.shared.duio.IterativeContainerComponent import IterativeContainerComponent
 from expander.shared.duio.StrongComponent import StrongComponent
 from expander.shared.duio.TextComponent import TextComponent
+from expander.shared.duio.TimeComponent import TimeComponent
+from expander.shared.duio.UrlComponent import UrlComponent
 
 DUIO = Namespace('http://purl.org/datenzee/ui-ontology#')
 RDF = Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
@@ -94,6 +99,26 @@ class Loader:
         elif DUIO.EmphasisComponent in component_types:
             created_component = create_content_component(EmphasisComponent)
 
+        elif DUIO.URLComponent in component_types:
+            predicate = self._load_content_component_predicate(component)
+            text = self._load_content_component_text(component)
+            url_label_predicate = self._load_content_component_url_label_predicate(component)
+            url_label_text = self._load_content_component_url_label_text(component)
+            created_component = UrlComponent(component_name, component_is_block, predicate, text, url_label_predicate,
+                                             url_label_text)
+
+        elif DUIO.EmailComponent in component_types:
+            created_component = create_content_component(EmailComponent)
+
+        elif DUIO.DateComponent in component_types:
+            created_component = create_content_component(DateComponent)
+
+        elif DUIO.DateTimeComponent in component_types:
+            created_component = create_content_component(DateTimeComponent)
+
+        elif DUIO.TimeComponent in component_types:
+            created_component = create_content_component(TimeComponent)
+
         else:
             raise AttributeError(f'Unknown component type: {component_types}')
 
@@ -112,5 +137,15 @@ class Loader:
 
     def _load_content_component_text(self, component):
         for component_content in self.graph.objects(component, DUIO.contentComponentContent):
+            return next(self.graph.objects(component_content, DUIO.textContentValue))
+        return None
+
+    def _load_content_component_url_label_predicate(self, component):
+        for predicate in self.graph.objects(component, DUIO.urlComponentLabelPredicate):
+            return predicate
+        return None
+
+    def _load_content_component_url_label_text(self, component):
+        for component_content in self.graph.objects(component, DUIO.urlComponentLabelContent):
             return next(self.graph.objects(component_content, DUIO.textContentValue))
         return None

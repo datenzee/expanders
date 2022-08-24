@@ -1,0 +1,31 @@
+<script setup>
+{% if predicate or url_label_predicate -%}
+import * as $rdf from 'rdflib'
+{%- endif  %}
+// <custom-imports>
+// </custom-imports>
+
+const props = defineProps([
+    'graph',
+    'depth',
+    'object',
+    // <custom-props>
+    // </custom-props>
+])
+
+{% if predicate %}
+const predicate = $rdf.sym('{{ predicate }}')
+{% endif %}
+
+{% if url_label_predicate %}
+const urlLabelPredicate = $rdf.sym('{{ url_label_predicate }}')
+{% endif %}
+
+// <custom-code>
+// </custom-code>
+</script>
+<template>
+    <a :href="{%- if predicate -%}{{ 'graph?.match(object, predicate)[0]?.object.value' }}{%- else -%}'{{ text }}'{%- endif -%}"{{ ' class="block"' if is_block else '' }} target="_blank">
+        {% if url_label_predicate -%}{{ 'graph?.match(object, urlLabelPredicate)[0]?.object.value' }}{%- else -%}{{ url_label_text }}{% endif %}
+    </a>
+</template>
