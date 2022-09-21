@@ -22,7 +22,7 @@ class VueExpander:
         shutil.rmtree(self.output_dir, ignore_errors=True)
 
     def _copy_template_project(self):
-        template_dir = path.join(path.dirname(__file__), '..', '..', 'vue-project-template')
+        template_dir = path.join(path.dirname(__file__), '..', '..', 'project-templates', 'vue')
         shutil.copytree(template_dir, self.output_dir)
 
     def _expand_components(self):
