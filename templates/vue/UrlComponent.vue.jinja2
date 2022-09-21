@@ -26,6 +26,6 @@ const urlLabelPredicate = $rdf.sym('{{ url_label_predicate }}')
 </script>
 <template>
     <a :href="{%- if predicate -%}{{ 'graph?.match(object, predicate)[0]?.object.value' }}{%- else -%}'{{ text }}'{%- endif -%}"{{ ' class="block"' if is_block else '' }} target="_blank">
-        {% if url_label_predicate -%}{{ 'graph?.match(object, urlLabelPredicate)[0]?.object.value' }}{%- else -%}{{ url_label_text }}{% endif %}
+        {% if url_label_predicate -%}{{ '{{ graph?.match(object, urlLabelPredicate)[0]?.object.value }}' }}{%- else -%}{{ url_label_text }}{% endif %}
     </a>
 </template>
