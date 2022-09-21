@@ -12,10 +12,6 @@ main {
     background-color: #fff;
 }
 
-main *:first-child {
-    margin-top: 0;
-}
-
 .block {
     display: block;
     margin-bottom: 1rem;
@@ -32,4 +28,8 @@ main *:first-child {
 
 a {
     color: #08d;
+}
+
+h2 {
+    margin-top: 3rem;
 }
