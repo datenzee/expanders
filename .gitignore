@@ -153,3 +153,5 @@ cython_debug/
 
 tmp
 tmp-doc
+
+project-templates/vue/node_modules
