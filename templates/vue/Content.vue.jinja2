@@ -2,9 +2,9 @@
 {% if predicate -%}
 import * as $rdf from 'rdflib'
 {%- endif  %}
-import Heading from '@/components/duo/Heading.vue'
 // <custom-imports>
 // </custom-imports>
+
 
 const props = defineProps([
     'graph',
@@ -22,9 +22,11 @@ const predicate = $rdf.sym('{{ predicate }}')
 // </custom-code>
 </script>
 <template>
-    {% if predicate -%}
-    <Heading :depth="depth" :text="{{ 'graph?.match(object, predicate)[0]?.object.value' }}" {{ '' if is_block else 'class="inline"'  }} />
-    {%- else -%}
-    <Heading :depth="depth" text="{{ text }}" {{ '' if is_block else 'style="display: inline"'  }} />
-    {%- endif %}
+    <span>
+        {%- if predicate -%}
+        {{ '{{ graph?.match(object, predicate)[0]?.object.value }}' }}
+        {%- else -%}
+        {{ content }}
+        {%- endif -%}
+    </span>
 </template>

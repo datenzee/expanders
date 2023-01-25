@@ -2,6 +2,7 @@
 {%- if predicate %}
 import * as $rdf from 'rdflib'
 {%- endif  %}
+import moment from 'moment'
 // <custom-imports>
 // </custom-imports>
 
@@ -17,15 +18,17 @@ const props = defineProps([
 {% if predicate %}
 const predicate = $rdf.sym('{{ predicate }}')
 {% endif %}
+
+const format = (value) => moment(value).format('{{ format }}')
 // <custom-code>
 // </custom-code>
 </script>
 <template>
-    <{{ element }}{%- if is_block %} style="display: block"{%-  endif -%}>
+    <span>
         {%- if predicate -%}
-            {{ '{{ graph?.match(object, predicate)[0]?.object.value }}' }}
+            {{ '{{ format(graph?.match(object, predicate)[0]?.object.value) }}' }}
         {%- else -%}
-            {{ text }}
+            {{ '{{ format("' + text + '") }}' }}
         {%- endif -%}
-    </{{ element }}>
+    </span>
 </template>

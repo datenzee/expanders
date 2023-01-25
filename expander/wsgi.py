@@ -30,16 +30,17 @@ def get_endpoint(url):
 @app.route('/expand', methods=['POST'])
 def expand():
     data = request.json
+    root_component = data['root_component']
     template_editor_id = data['template_editor_id']
     expander_type = data['expander_type']
 
     with tempfile.TemporaryDirectory() as tmpdirname:
         if expander_type == 'vue':
-            expander = VueExpander(tmpdirname, input_data=data['content'])
+            expander = VueExpander(root_component, tmpdirname, input_data=data['content'])
             expander.expand()
             expander.post_expand()
         elif expander_type == 'doc':
-            expander = DocExpander(tmpdirname, input_data=data['content'])
+            expander = DocExpander(root_component, tmpdirname, input_data=data['content'])
             expander.expand()
             expander.post_expand()
         else:

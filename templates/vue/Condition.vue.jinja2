@@ -1,0 +1,42 @@
+<script setup>
+import * as $rdf from 'rdflib'
+{% for component in contains_positive -%}
+import {{ component }} from './{{ component }}.vue'
+{% endfor %}
+{% for component in contains_negative -%}
+import {{ component }} from './{{ component }}.vue'
+{% endfor %}
+// <custom-imports>
+// </custom-imports>
+
+
+const props = defineProps([
+    'graph',
+    'depth',
+    'object',
+    // <custom-props>
+    // </custom-props>
+])
+
+
+const predicate = $rdf.sym('{{ predicate }}')
+const value = '{{ value }}'
+
+const compare = (object) => props.graph?.match(object, predicate)[0]?.object.value == value
+// <custom-code>
+// </custom-code>
+</script>
+<template>
+    <{{ elem }}{% if force_block and is_block %} style="display: block"{% endif %}>
+        <template v-if="compare(object)">
+            {% for component in contains_positive -%}
+            <{{ component }} :graph="graph" :depth="depth + 1" :object="object" />
+            {% endfor %}
+        </template>
+        <template v-else>
+            {% for component in contains_negative -%}
+            <{{ component }} :graph="graph" :depth="depth + 1" :object="object" />
+            {% endfor %}
+        </template>
+    </{{ elem }}>
+</template>

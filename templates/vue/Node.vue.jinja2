@@ -1,0 +1,26 @@
+<script setup>
+{% for component in contains -%}
+import {{ component }} from './{{ component }}.vue'
+{% endfor %}
+// <custom-imports>
+// </custom-imports>
+
+
+const props = defineProps([
+    'graph',
+    'depth',
+    'object',
+    // <custom-props>
+    // </custom-props>
+])
+
+// <custom-code>
+// </custom-code>
+</script>
+<template>
+    <{{ elem }}{% if force_block and is_block %} style="display: block"{% endif %}>
+        {% for component in contains -%}
+        <{{ component }} :graph="graph" :depth="depth + 1" :object="object" />
+        {% endfor %}
+    </{{ elem }}>
+</template>

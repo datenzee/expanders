@@ -11,7 +11,7 @@ $ make install
 Expand and build the application:
 
 ```
-$ expander <type> <path-to-owl> <path-to-out-dir>
+$ expander <type> <root-component> <path-to-owl> <path-to-out-dir>
 ```
 
 Where type can be
@@ -34,5 +34,5 @@ You can use GET parameters to specify data source and root node in the graph wit
 
 **Example**
 ```
-http://localhost:8081/?data=https://api.datenzee.ds-wizard.org/questionnaires/4dac4509-f0a3-4346-b7ce-586a3098b100/documents/preview&root=https://demo.ds-wizard.org/questionnaires/00f2e7b7-a1c8-42a1-a2fc-2f93dbdbaa76
+http://localhost:8081/?data=https://api.datenzee.ds-wizard.org/questionnaires/9a710add-11b7-4544-a432-82727b45eca6/documents/preview
 ```

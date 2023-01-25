@@ -1,0 +1,20 @@
+<script setup>
+import {{ content }} from './{{ content }}.vue'
+// <custom-imports>
+// </custom-imports>
+
+
+const props = defineProps([
+    'graph',
+    'depth',
+    'object',
+    // <custom-props>
+    // </custom-props>
+])
+
+// <custom-code>
+// </custom-code>
+</script>
+<template>
+    <{{ content }} :graph="graph" :depth="depth" :object="object" />
+</template>

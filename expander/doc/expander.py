@@ -8,10 +8,10 @@ from expander.doc.templates import load_component_template
 
 
 class DocExpander:
-    def __init__(self, output_dir, input_source=None, input_data=None):
+    def __init__(self, root_component, output_dir, input_source=None, input_data=None):
         self.output_dir = output_dir
         self.components_output_dir = path.join(output_dir, 'src', 'components', 'gen')
-        self.loader = Loader(source=input_source, data=input_data)
+        self.loader = Loader(root_component, source=input_source, data=input_data)
 
     def expand(self):
         self._clean_output_dir()

@@ -8,14 +8,17 @@ from expander.vue.templates import load_component_template
 
 
 class VueExpander:
-    def __init__(self, output_dir, input_source=None, input_data=None):
+    def __init__(self, root_component, output_dir, input_source=None, input_data=None):
         self.output_dir = output_dir
+        self.src_output_dir = path.join(output_dir, 'src')
         self.components_output_dir = path.join(output_dir, 'src', 'components', 'gen')
-        self.loader = Loader(source=input_source, data=input_data)
+        self.loader = Loader(root_component, source=input_source, data=input_data)
 
     def expand(self):
+        self.loader.load()
         self._clean_output_dir()
         self._copy_template_project()
+        self._expand_app()
         self._expand_components()
 
     def _clean_output_dir(self):
@@ -25,12 +28,33 @@ class VueExpander:
         template_dir = path.join(path.dirname(__file__), '..', '..', 'project-templates', 'vue')
         shutil.copytree(template_dir, self.output_dir)
 
+    def _expand_app(self):
+        template = load_component_template('App')
+        file_name = path.join(self.src_output_dir, 'App.vue')
+
+        with open(file_name, mode='w') as file:
+            file.write(template.render(root_component=self.loader.root_component_name))
+
     def _expand_components(self):
-        self.loader.load()
+
+        print('\n*** Data Components ***\n')
+        for component in self.loader.data_components:
+            print(component.to_string_full())
+
         pathlib.Path(self.components_output_dir).mkdir(parents=True, exist_ok=True)
+
+        for component in self.loader.data_components:
+            self._expand_data_component(component)
 
         for component in self.loader.components:
             self._expand_component(component)
+
+    def _expand_data_component(self, component):
+        template = load_component_template('DataComponent')
+        file_name = path.join(self.components_output_dir, f'{component.name}.vue')
+
+        with open(file_name, mode='w') as file:
+            file.write(template.render(**component.template_data()))
 
     def _expand_component(self, component):
         template = load_component_template(component.template())
