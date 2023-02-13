@@ -1,0 +1,9 @@
+{{ '{%' }} import 'src/components/vo/IterativeContainer.html.jinja2' as IterativeContainer %}
+{{ '{%' }} import 'src/components/gen/{{ dataComponent }}.html.jinja2' as {{ dataComponent }} %}
+
+{{ '{%-' }} macro component(graph, depth, object) -%}
+    {{ '{%-' }} set predicate = '{{ predicate }}' {{ '-%}' }}
+    {{ '{%' }} call(slotObj) IterativeContainer.component(graph, depth, object, predicate) %}
+        {{ '{{' }} {{ dataComponent }}.component(graph, depth, slotObj) }}
+    {{ '{%' }} endcall %}
+{{ '{%-' }} endmacro -%}

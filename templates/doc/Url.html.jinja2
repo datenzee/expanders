@@ -1,0 +1,11 @@
+{{ '{%-' }} macro component(graph, depth, object) -%}
+    {{ '{%-' }} set predicate = '{{ predicate }}' {{ '-%}' }}
+    {{ '{%-' }} set linkFromPredicate = rdf_helpers.get_object_by(graph, object, predicate) {{ '-%}' }}
+    <a href="{%- if predicate -%}{{ '{{ ' }}linkFromPredicate{{ ' }}' }}{%- else -%}{{ text }}{%- endif -%}" target="_blank">
+        {%- if predicate -%}
+            {{ '{{ ' }}linkFromPredicate if linkFromPredicate{{ ' }}' }}
+        {%- else -%}
+            {{ text }}
+        {%- endif -%}
+    </a>
+{{ '{%-' }} endmacro -%}}

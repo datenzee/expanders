@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #eee;
+        }
+
+        main {
+            max-width: 80rem;
+            padding: 2rem;
+            margin: auto;
+            background-color: #fff;
+        }
+
+        .block {
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .inline {
+            display: inline;
+            margin-bottom: 0;
+        }
+
+        .text-danger {
+            color: #c00;
+        }
+
+        a {
+            color: #08d;
+        }
+
+        h2 {
+            margin-top: 3rem;
+        }
+
+    </style>
+</head>
+<body>
+    {# 1. Init RDF #}
+    {{ '{%-' }} set graph = rdflib.Graph() {{ '-%}' }}
+    {{ '{%-' }} do graph.parse(data=document.content.decode('utf-8'), format='ttl') {{ '-%}' }}
+
+    {# 2. Import Root Component #}
+    {{ '{%-' }} import 'src/components/gen/{{ root_component }}.html.jinja2' as Root -%}
+
+    {# 3. Prepare variables #}
+    {{ '{%-' }} set object = 'https://w3id.org/dcso/ns/core#DMP' {{ '-%}' }}
+    {{ '{%-' }} set subject = rdf_helpers.get_subject_by(graph, 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', 'https://w3id.org/dcso/ns/core#DMP') {{ '-%}' }}
+    {{ '{%-' }} set depth = 0 {{ '-%}' }}
+
+    {# 4. Render Root Component #}
+    <main>
+        {{ '{{' }} Root.component(graph, depth, subject) }}
+    </main>
+
+</body>
+</html>

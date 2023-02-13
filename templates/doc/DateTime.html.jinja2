@@ -1,0 +1,8 @@
+{{ '{%-' }} macro component(graph, depth, object) -%}
+    {{ '{%-' }} set predicate = '{{ predicate }}' {{ '-%}' }}
+    {%- if predicate -%}
+        {{ '{{ ' }}rdf_helpers.get_object_by(graph, object, predicate){{ '|datetime_format("%d %b %Y") }}' }}
+    {%- else -%}
+        {{ text|datetime_format("%d %b %Y") }}
+    {%- endif -%}
+{{ '{%-' }} endmacro -%}}

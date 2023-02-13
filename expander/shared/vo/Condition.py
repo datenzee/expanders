@@ -30,4 +30,5 @@ class Condition(Node):
             'contains_positive': self.contains_positive,
             'contains_negative': self.contains_negative,
             'predicate': self.predicate,
+            'value': self.value,
         }

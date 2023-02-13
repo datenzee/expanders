@@ -1,0 +1,51 @@
+{
+    "templateId": "datenzee-doc-expanded-template",
+    "organizationId": "datenzee",
+    "version": "1.0.0",
+    "name": "Datenzee Doc Expanded Template",
+    "description": "Expanded Template from Datenzee",
+    "license": "Apache-2.0",
+    "metamodelVersion": 11,
+    "recommendedPackageId": null,
+    "allowedPackages": [
+        {
+            "orgId": null,
+            "kmId": null,
+            "minVersion": null,
+            "maxVersion": null
+        }
+    ],
+    "formats": [
+        {
+            "uuid": "a9293d08-59a4-4e6b-ae62-7a6a570b031c",
+            "name": "HTML Document",
+            "icon": "far fa-file-code",
+            "steps": [
+                {
+                  "name": "jinja",
+                  "options": {
+                    "content-type": "text/turtle",
+                    "extension": "ttl",
+                    "template": "src/Rdf.ttl.jinja2"
+                  }
+                },
+                {
+                    "name": "jinja",
+                    "options": {
+                        "content-type": "text/html",
+                        "extension": "html",
+                        "template": "src/App.html.jinja2"
+                    }
+                }
+            ]
+        }
+    ],
+    "_tdk": {
+        "version": "3.20.2",
+        "readmeFile": "README.md",
+        "files": [
+            "src/*",
+            "src/components/gen/*"
+        ]
+    }
+}

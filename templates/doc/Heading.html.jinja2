@@ -1,0 +1,13 @@
+{{ '{%' }} import 'src/components/vo/Heading.html.jinja2' as Heading %}
+{% for component in contains -%}
+{{ '{%' }} import 'src/components/gen/{{ component }}.html.jinja2' as {{ component }} %}
+{% endfor %}
+
+{{ '{%-' }} macro component(graph, depth, object) -%}
+    {{ '{%-' }} call Heading.component(depth) -%}
+        {%- for component in contains -%}
+            {{ '{{' }} {{ component }}.component(graph, depth + 1, object) }}
+        {%- endfor -%}
+    {{ '{%-' }} endcall -%}
+
+{{ '{%-' }} endmacro -%}

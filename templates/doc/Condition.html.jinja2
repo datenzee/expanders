@@ -1,0 +1,20 @@
+{% for component in contains_positive -%}
+{{ '{%' }} import 'src/components/gen/{{ component }}.html.jinja2' as {{ component }} %}
+{% endfor %}
+{% for component in contains_negative -%}
+{{ '{%' }} import 'src/components/gen/{{ component }}.html.jinja2' as {{ component }} %}
+{% endfor %}
+
+{{ '{%-' }} macro component(graph, depth, object) -%}
+    {{ '{%-' }} set predicate = '{{ predicate }}' {{ '-%}' }}
+    {{ '{%-' }} set value = '{{ value }}' {{ '-%}' }}
+    {{ '{%-' }} if rdf_helpers.get_object_by(graph, object, predicate).value == value {{ '-%}' }}
+        {%- for component in contains_positive -%}
+            {{ '{{' }} {{ component }}.component(graph, depth + 1, object) }}
+        {%- endfor -%}
+    {{ '{%-' }} else -%}
+        {%- for component in contains_negative -%}
+            {{ '{{' }} {{ component }}.component(graph, depth + 1, object) }}
+        {%- endfor -%}
+    {{ '{%-' }} endif -%}
+{{ '{%-' }} endmacro -%}

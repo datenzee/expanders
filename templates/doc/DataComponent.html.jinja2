@@ -1,0 +1,5 @@
+{{ '{%' }} import 'src/components/gen/{{ content }}.html.jinja2' as {{ content }} %}
+
+{{ '{%-' }} macro component(graph, depth, object) -%}
+    {{ '{{' }} {{ content }}.component(graph, depth, object) }}
+{{ '{%-' }} endmacro -%}

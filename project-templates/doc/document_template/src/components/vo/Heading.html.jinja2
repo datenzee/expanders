@@ -1,0 +1,10 @@
+{%- macro component(depth) -%}
+    {% if depth > 6 %}
+        {% set tag = 'h6' %}
+    {% else %}
+        {% set tag = 'h' ~ depth %}
+    {% endif %}
+    <{{ tag }}>
+        {{ caller() }}
+    </{{ tag }}>
+{%- endmacro -%}

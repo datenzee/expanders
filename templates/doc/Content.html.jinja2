@@ -1,0 +1,9 @@
+{{ '{%-' }} macro component(graph, depth, object) -%}
+    <span>
+        {%- if predicate -%}
+            {{ '{{' }} rdf_helpers.get_object_by(graph, object, '{{predicate}}') }}
+        {%- else -%}
+            {{ content }}
+        {%- endif -%}
+    </span>
+{{ '{%-' }} endmacro -%}

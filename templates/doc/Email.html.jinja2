@@ -1,0 +1,11 @@
+{{ '{%-' }} macro component(graph, depth, object) -%}
+    {{ '{%-' }} set predicate = '{{ predicate }}' {{ '-%}' }}
+    {{ '{%-' }} set emailFromPredicate = rdf_helpers.get_object_by(graph, object, predicate) {{ '-%}' }}
+    <a href="{%- if predicate -%}mailto:{{ '{{ ' }}emailFromPredicate{{ ' }}' }}{%- else -%}mailto:{{ text }}{%- endif -%}" {{ 'class="block"' if is_block else '' }}>
+        {%- if predicate -%}
+            {{ '{{ ' }}emailFromPredicate if emailFromPredicate{{ ' }}' }}
+        {%- else -%}
+            {{ text }}
+        {%- endif -%}
+    </a>
+{{ '{%-' }} endmacro -%}}

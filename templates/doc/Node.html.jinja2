@@ -1,0 +1,11 @@
+{% for component in contains -%}
+{{ '{%' }} import 'src/components/gen/{{ component }}.html.jinja2' as {{ component }} %}
+{% endfor %}
+
+{{ '{%-' }} macro component(graph, depth, object) -%}
+    <{{ elem }}{% if force_block and is_block %} style="display: block"{% endif %}>
+        {% for component in contains -%}
+            {{ '{{' }} {{ component }}.component(graph, depth + 1, object) }}
+        {% endfor %}
+    </{{ elem }}>
+{{ '{%-' }} endmacro -%}

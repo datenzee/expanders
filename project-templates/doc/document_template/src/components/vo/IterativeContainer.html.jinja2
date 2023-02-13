@@ -1,0 +1,8 @@
+{%- macro component(graph, depth, object, predicate) -%}
+    {%- set objects = rdf_helpers.get_objects_by(graph, object, predicate)  -%}
+    <div>
+        {%- for obj in objects -%}
+            {{ caller(obj) }}
+        {%- endfor -%}
+    </div>
+{%- endmacro -%}

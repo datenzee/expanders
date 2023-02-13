@@ -1,0 +1,16 @@
+{% import 'src/components/vo/IterativeContainer.html.jinja2' as IterativeContainer %}
+{% for component in contains -%}
+{{ '{%' }} import 'src/components/gen/{{ component }}.html.jinja2' as {{ component }} %}
+{% endfor %}
+
+{%- macro component(graph, depth, object) -%}
+    {{ '{%-' }} set predicate = '{{ predicate }}' {{ '-%}' }}
+    {%- set objects = rdf_helpers.get_objects_by(graph, object, predicate)  -%}
+    <div>
+        {{ caller() }}
+        {%- for obj in objects -%}
+            {{ obj }}
+        {%- endfor -%}
+    </div>
+
+{%- endmacro -%}
