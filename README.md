@@ -34,7 +34,7 @@ You can use GET parameters to specify data source and root node in the graph wit
 
 **Example**
 ```
-http://localhost:8081/?data=https://api.datenzee.ds-wizard.org/questionnaires/9a710add-11b7-4544-a432-82727b45eca6/documents/preview
+http://localhost:8081/?data=https://datenzee.ds-wizard.org/wizard-api/questionnaires/9a710add-11b7-4544-a432-82727b45eca6/documents/preview
 ```
 
 ## License

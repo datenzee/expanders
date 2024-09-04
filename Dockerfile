@@ -1,4 +1,4 @@
-FROM docker.io/python:3.9-alpine
+FROM --platform=linux/amd64 docker.io/python:3.9-alpine
 
 RUN apk add --update nodejs npm
 

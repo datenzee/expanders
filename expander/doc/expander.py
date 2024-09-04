@@ -3,8 +3,8 @@ import shutil
 import subprocess
 from os import path
 
-from expander.shared.loader import Loader
 from expander.doc.templates import load_component_template
+from expander.shared.loader import Loader
 
 
 class DocExpander:
@@ -63,11 +63,8 @@ class DocExpander:
 
         with open(file_name, mode='w') as file:
             file.write(template.render(**component.template_data()))
+            print(f'{file_name}: Writing file')
+        print(f'{file_name}: Success')
 
     def post_expand(self, dev=False):
-        orig_dir = path.join(path.dirname(__file__), '..', '..', 'project-templates', 'doc')
-        tmp_dir = path.join(path.dirname(__file__), '..', '..', 'tmp-doc')
-        # subprocess.check_call('. env/bin/activate', shell=True, cwd=orig_dir)
-        command = f'cd {orig_dir} && . env/bin/activate && cd {tmp_dir} && dsw-tdk put'
-        print(command)
-        subprocess.check_call(command, shell=True, cwd=self.output_dir)
+        subprocess.check_call('dsw-tdk put', shell=True, cwd=self.output_dir)
