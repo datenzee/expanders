@@ -34,7 +34,15 @@ if (dataUrl) {
     axios
         .get(dataUrl)
         .then((result) => {
-            createGraph(result.data)
+            if (typeof result.data === 'object' && result.data.url) {
+                axios
+                    .get(result.data.url)
+                    .then((result) => {
+                        createGraph(result.data)
+                    })
+            } else {
+              createGraph(result.data)
+            }
         })
 } else {
     createGraph(data)
