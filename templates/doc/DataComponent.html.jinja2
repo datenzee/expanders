@@ -1,5 +1,11 @@
 {{ '{%' }} import 'src/components/gen/{{ content }}.html.jinja2' as {{ content }} %}
 
 {{ '{%-' }} macro component(graph, depth, object) -%}
+    {{ '{#' }}  Customization (before): start  #}
+        {{ harvested_before }}
+    {{ '{#' }}  Customization (before): end  #}
     {{ '{{' }} {{ content }}.component(graph, depth, object) }}
+    {{ '{#' }}  Customization (after): start  #}
+        {{ harvested_after }}
+    {{ '{#' }}  Customization (after): end  #}
 {{ '{%-' }} endmacro -%}

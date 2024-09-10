@@ -4,10 +4,15 @@
 {% endfor %}
 
 {{ '{%-' }} macro component(graph, depth, object) -%}
+    {{ '{#' }}  Customization (before): start  #}
+        {{ harvested_before }}
+    {{ '{#' }}  Customization (before): end  #}
     {{ '{%-' }} call Heading.component(depth) -%}
         {%- for component in contains -%}
             {{ '{{' }} {{ component }}.component(graph, depth + 1, object) }}
         {%- endfor -%}
     {{ '{%-' }} endcall -%}
-
+    {{ '{#' }}  Customization (after): start  #}
+        {{ harvested_after }}
+    {{ '{#' }}  Customization (after): end  #}
 {{ '{%-' }} endmacro -%}

@@ -3,9 +3,15 @@
 {% endfor %}
 
 {{ '{%-' }} macro component(graph, depth, object) -%}
+    {{ '{#' }}  Customization (before): start  #}
+        {{ harvested_before }}
+    {{ '{#' }}  Customization (before): end  #}
     <{{ elem }}{% if force_block and is_block %} style="display: block"{% endif %}>
         {% for component in contains -%}
             {{ '{{' }} {{ component }}.component(graph, depth + 1, object) }}
         {% endfor %}
     </{{ elem }}>
+    {{ '{#' }}  Customization (after): start  #}
+        {{ harvested_after }}
+    {{ '{#' }}  Customization (after): end  #}
 {{ '{%-' }} endmacro -%}

@@ -1,8 +1,14 @@
 {{ '{%-' }} macro component(graph, depth, object) -%}
+    {{ '{#' }}  Customization (before): start  #}
+        {{ harvested_before }}
+    {{ '{#' }}  Customization (before): end  #}
     {{ '{%-' }} set predicate = '{{ predicate }}' {{ '-%}' }}
     {%- if predicate -%}
         {{ '{{ ' }}rdf_helpers.get_object_by(graph, object, predicate){{ '|datetime_format("%d %b %Y") }}' }}
     {%- else -%}
         {{ text|datetime_format("%d %b %Y") }}
     {%- endif -%}
+    {{ '{#' }}  Customization (after): start  #}
+        {{ harvested_after }}
+    {{ '{#' }}  Customization (after): end  #}
 {{ '{%-' }} endmacro -%}}

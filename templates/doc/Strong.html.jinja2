@@ -3,10 +3,16 @@
 {% endfor %}
 
 {{ '{%-' }} macro component(graph, depth, object) -%}
+    {{ '{#' }}  Customization (before): start  #}
+        {{ harvested_before }}
+    {{ '{#' }}  Customization (before): end  #}
     {% set elem = 'div' if is_block else 'span' -%}
     <{{ elem }}>
         {% for component in contains -%}
             {{ '{{' }} {{ component }}.component(graph, depth + 1, object) }}
         {% endfor %}
     </{{ elem }}>
+    {{ '{#' }}  Customization (after): start  #}
+        {{ harvested_after }}
+    {{ '{#' }}  Customization (after): end  #}
 {{ '{%-' }} endmacro -%}

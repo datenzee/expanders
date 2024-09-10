@@ -6,6 +6,9 @@
 {% endfor %}
 
 {{ '{%-' }} macro component(graph, depth, object) -%}
+    {{ '{#' }}  Customization (before): start  #}
+        {{ harvested_before }}
+    {{ '{#' }}  Customization (before): end  #}
     {{ '{%-' }} set predicate = '{{ predicate }}' {{ '-%}' }}
     {{ '{%-' }} set value = '{{ value }}' {{ '-%}' }}
     {{ '{%-' }} if rdf_helpers.get_object_by(graph, object, predicate).value == value {{ '-%}' }}
@@ -17,4 +20,7 @@
             {{ '{{' }} {{ component }}.component(graph, depth + 1, object) }}
         {%- endfor -%}
     {{ '{%-' }} endif -%}
+    {{ '{#' }}  Customization (after): start  #}
+        {{ harvested_after }}
+    {{ '{#' }}  Customization (after): end  #}
 {{ '{%-' }} endmacro -%}
