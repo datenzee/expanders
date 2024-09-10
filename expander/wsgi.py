@@ -9,6 +9,7 @@ from flask import Flask, request, jsonify, abort
 from minio import Minio
 
 from expander.doc.expander import DocExpander
+from expander.doc.harvester import harvest, download_harvested_files
 from expander.vue.expander import VueExpander
 
 load_dotenv()
@@ -40,7 +41,10 @@ def expand():
             expander.expand()
             expander.post_expand()
         elif expander_type == 'doc':
-            expander = DocExpander(root_component, tmpdirname, input_data=data['content'])
+            with tempfile.TemporaryDirectory() as tmp_harvested_dir:
+                download_harvested_files(tmp_harvested_dir)
+                harvested_data = harvest(tmp_harvested_dir)
+            expander = DocExpander(root_component, tmpdirname, harvested_data, input_data=data['content'])
             expander.expand()
             expander.post_expand()
         else:

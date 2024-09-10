@@ -8,8 +8,9 @@ from expander.shared.loader import Loader
 
 
 class DocExpander:
-    def __init__(self, root_component, output_dir, input_source=None, input_data=None):
+    def __init__(self, root_component, output_dir, harvested_data, input_source=None, input_data=None):
         self.output_dir = output_dir
+        self.harvested_data = harvested_data
         self.src_output_dir = path.join(output_dir, 'src')
         self.components_output_dir = path.join(output_dir, 'src', 'components', 'gen')
         self.loader = Loader(root_component, source=input_source, data=input_data)
@@ -54,15 +55,23 @@ class DocExpander:
         template = load_component_template('DataComponent')
         file_name = path.join(self.components_output_dir, f'{component.name}.html.jinja2')
 
-        with open(file_name, mode='w') as file:
-            file.write(template.render(**component.template_data()))
+        with (open(file_name, mode='w') as file):
+            harvested_before = self.harvested_data.get(component.name + "_before", '')
+            harvested_after = self.harvested_data.get(component.name + "_after", '')
+            data = component.template_data() | {'harvested_before': harvested_before,
+                                                'harvested_after': harvested_after}
+            file.write(template.render(**data))
 
     def _expand_component(self, component):
         template = load_component_template(component.template())
         file_name = path.join(self.components_output_dir, f'{component.name}.html.jinja2')
 
-        with open(file_name, mode='w') as file:
-            file.write(template.render(**component.template_data()))
+        with (open(file_name, mode='w') as file):
+            harvested_before = self.harvested_data.get(component.name + "_before", '')
+            harvested_after = self.harvested_data.get(component.name + "_after", '')
+            data = component.template_data()| {'harvested_before': harvested_before,
+                                                'harvested_after': harvested_after}
+            file.write(template.render(**data))
             print(f'{file_name}: Writing file')
         print(f'{file_name}: Success')
 

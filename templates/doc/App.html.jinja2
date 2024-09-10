@@ -5,38 +5,114 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
 
+       @page {
+            size: A4;
+
+            @bottom-left {
+                border-top: 1px solid black;
+                content: '';
+                display: block;
+                width: 100%;
+                padding-top: 1rem;
+                vertical-align: top;
+                font-family: "Open Sans", sans-serif;
+                font-size: 10pt;
+            }
+            @bottom-center {
+                border-top: 1px solid black;
+                content: '';
+                display: block;
+                width: 100%;
+                padding-top: 1rem;
+                vertical-align: top;
+                font-family: "Open Sans", sans-serif;
+                font-size: 10pt;
+            }
+            @bottom-center {
+                border-top: 1px solid black;
+                content: counter(page) " / " counter(pages);
+                display: block;
+                width: 100%;
+                padding-top: 1rem;
+                vertical-align: top;
+                font-family: "Open Sans", sans-serif;
+                font-size: 10pt;
+            }
+        }
+
+        @page :blank {
+            @top-center {
+                content: none
+            }
+            @bottom-left {
+                content: none
+            }
+            @bottom-center {
+                content: none
+            }
+            @bottom-right {
+                content: none
+            }
+        }
+
+        @page :first {
+            @top-center {
+                content: none
+            }
+            @bottom-left {
+                content: none
+            }
+            @bottom-center {
+                content: none
+            }
+            @bottom-right {
+                content: none
+            }
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            page-break-inside: avoid !important;
+            page-break-after: avoid !important;
+        }
+
+        html, body {
+            height: 100%;
+            padding: 1em;
+        }
+
         body {
-            font-family: 'Nunito', sans-serif;
-            background-color: #eee;
+            font-family: "Open Sans", sans-serif;
+            font-size: 11pt;
+            counter-reset: section;
+            counter-reset: question;
+            max-width: 21cm;
+            margin: 0 auto;
         }
 
-        main {
-            max-width: 80rem;
-            padding: 2rem;
-            margin: auto;
-            background-color: #fff;
+        p {
+            margin-top: 0;
+            margin-bottom: 8px;
         }
 
-        .block {
-            display: block;
-            margin-bottom: 1rem;
+        /* Sections */
+
+        section {
+            margin-bottom: 4rem;
         }
 
-        .inline {
-            display: inline;
-            margin-bottom: 0;
+        /* First page */
+
+        header {
+          height: 24cm;
+          box-sizing: border-box;
+          page-break-after: always;
+          position: relative;
         }
 
-        .text-danger {
-            color: #c00;
-        }
-
-        a {
-            color: #08d;
-        }
-
-        h2 {
-            margin-top: 3rem;
+        header h1 {
+          margin: 2em;
+          font-size: 24pt;
+          text-align: center;
         }
 
     </style>

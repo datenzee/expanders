@@ -7,4 +7,4 @@ python-dotenv==0.20.0
 rdflib==6.1.1
 stringcase==1.2.0
 Werkzeug==2.2.2
-dsw-tdk==4.10.1
+dsw-tdk==4.10.5

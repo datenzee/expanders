@@ -4,6 +4,9 @@
 {% endfor %}
 
 {%- macro component(graph, depth, object) -%}
+    {{ '{#' }}  Customization (before): start  #}
+        {{ harvested_before }}
+    {{ '{#' }}  Customization (before): end  #}
     {{ '{%-' }} set predicate = '{{ predicate }}' {{ '-%}' }}
     {%- set objects = rdf_helpers.get_objects_by(graph, object, predicate)  -%}
     <div>
@@ -12,5 +15,7 @@
             {{ obj }}
         {%- endfor -%}
     </div>
-
+    {{ '{#' }}  Customization (after): start  #}
+        {{ harvested_after }}
+    {{ '{#' }}  Customization (after): end  #}
 {%- endmacro -%}

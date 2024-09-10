@@ -1,51 +1,77 @@
 {
-    "templateId": "datenzee-doc-expanded-template",
-    "organizationId": "datenzee",
-    "version": "1.0.0",
-    "name": "Datenzee Doc Expanded Template",
-    "description": "Expanded Template from Datenzee",
-    "license": "Apache-2.0",
-    "metamodelVersion": 14,
-    "recommendedPackageId": null,
-    "allowedPackages": [
-        {
-            "orgId": null,
-            "kmId": null,
-            "minVersion": null,
-            "maxVersion": null
-        }
-    ],
-    "formats": [
-        {
-            "uuid": "a9293d08-59a4-4e6b-ae62-7a6a570b031c",
-            "name": "HTML Document",
-            "icon": "far fa-file-code",
-            "steps": [
-                {
-                  "name": "jinja",
-                  "options": {
-                    "content-type": "text/turtle",
-                    "extension": "ttl",
-                    "template": "src/Rdf.ttl.jinja2"
-                  }
-                },
-                {
-                    "name": "jinja",
-                    "options": {
-                        "content-type": "text/html",
-                        "extension": "html",
-                        "template": "src/App.html.jinja2"
-                    }
-                }
-            ]
-        }
-    ],
-    "_tdk": {
-        "version": "4.10.0",
-        "readmeFile": "README.md",
-        "files": [
-            "src/*",
-            "src/components/gen/*"
-        ]
+  "templateId": "horizon-europe-expanded-template",
+  "organizationId": "datenzee",
+  "version": "1.0.0",
+  "name": "Horizon Europe Expanded Template",
+  "description": "Expanded Horizon Europe Template",
+  "license": "Apache-2.0",
+  "metamodelVersion": 14,
+  "allowedPackages": [
+    {
+      "orgId": null,
+      "kmId": null,
+      "minVersion": null,
+      "maxVersion": null
     }
+  ],
+  "formats": [
+    {
+      "uuid": "a9293d08-59a4-4e6b-ae62-7a6a570b031c",
+      "name": "PDF Document",
+      "icon": "far fa-file-code",
+      "steps": [
+        {
+          "name": "jinja",
+          "options": {
+            "content-type": "text/turtle",
+            "extension": "ttl",
+            "template": "src/Rdf.ttl.jinja2"
+          }
+        },
+        {
+          "name": "jinja",
+          "options": {
+            "content-type": "text/html",
+            "extension": "html",
+            "template": "src/App.html.jinja2"
+          }
+        },
+        {
+          "name": "weasyprint",
+          "options": {}
+        }
+      ]
+    },
+    {
+      "uuid": "d6f4df7e-b3b9-46bd-83ba-1e7328541ef5",
+      "name": "HTML Document",
+      "icon": "far fa-file-code",
+      "steps": [
+        {
+          "name": "jinja",
+          "options": {
+            "content-type": "text/turtle",
+            "extension": "ttl",
+            "template": "src/Rdf.ttl.jinja2"
+          }
+        },
+        {
+          "name": "jinja",
+          "options": {
+            "content-type": "text/html",
+            "extension": "html",
+            "template": "src/App.html.jinja2"
+          }
+        }
+      ]
+    }
+  ],
+  "_tdk": {
+    "version": "4.10.4",
+    "readmeFile": "README.md",
+    "files": [
+      "src/*",
+      "src/components/gen/*"
+    ]
+  }
 }
