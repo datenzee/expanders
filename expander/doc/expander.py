@@ -8,12 +8,14 @@ from expander.shared.loader import Loader
 
 
 class DocExpander:
-    def __init__(self, root_component, output_dir, harvested_data, input_source=None, input_data=None):
+    def __init__(self, root_component, output_dir, harvested_data, input_source=None, input_data=None,
+                 dt_template_id="datenzee:horizon-europe-expanded-template:1.0.0"):
         self.output_dir = output_dir
         self.harvested_data = harvested_data
         self.src_output_dir = path.join(output_dir, 'src')
         self.components_output_dir = path.join(output_dir, 'src', 'components', 'gen')
         self.loader = Loader(root_component, source=input_source, data=input_data)
+        self.dt_template_id = dt_template_id
 
     def expand(self):
         self.loader.load()
@@ -69,11 +71,29 @@ class DocExpander:
         with (open(file_name, mode='w') as file):
             harvested_before = self.harvested_data.get(component.name + "_before", '')
             harvested_after = self.harvested_data.get(component.name + "_after", '')
-            data = component.template_data()| {'harvested_before': harvested_before,
+            data = component.template_data() | {'harvested_before': harvested_before,
                                                 'harvested_after': harvested_after}
             file.write(template.render(**data))
             print(f'{file_name}: Writing file')
         print(f'{file_name}: Success')
 
     def post_expand(self, dev=False):
+        parts = self.dt_template_id.split(':')
+        organization_id = parts[0]
+        template_id = parts[1]
+        version = parts[2]
+        replace_string_in_file(path.join(self.output_dir, 'template.json'), 'datenzee', organization_id)
+        replace_string_in_file(path.join(self.output_dir, 'template.json'), 'horizon-europe-expanded-template',
+                               template_id)
+        replace_string_in_file(path.join(self.output_dir, 'template.json'), '1.0.0', version)
+        replace_string_in_file(path.join(self.output_dir, 'template.json'), 'Horizon Europe Expanded Template',
+                               self.dt_template_id)
         subprocess.check_call('dsw-tdk put', shell=True, cwd=self.output_dir)
+
+
+def replace_string_in_file(file_path, old_string, new_string):
+    with open(file_path) as f:
+        s = f.read()
+    s = s.replace(old_string, new_string)
+    with open(file_path, "w") as f:
+        f.write(s)

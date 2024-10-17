@@ -4,7 +4,7 @@
     {{ '{#' }}  Customization (before): end  #}
     {{ '{%-' }} set predicate = '{{ predicate }}' {{ '-%}' }}
     {%- if predicate -%}
-        {{ '{{ ' }}rdf_helpers.get_object_by(graph, object, predicate){{ '|datetime_format("%d %b %Y") }}' }}
+        {{ '{{ ' }}rdf_helpers.get_object_by(graph, object, predicate){{ '|datetime_format("%d %b %Y %H:%M") }}' }}
     {%- else -%}
         {{ text|datetime_format("%d %b %Y") }}
     {%- endif -%}

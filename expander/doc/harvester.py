@@ -5,20 +5,20 @@ from glob import glob
 from pprint import pprint
 
 
-def download_harvested_files(tmp_harvested_dir):
+def download_harvested_files(tmp_harvested_dir, dt_template_id="datenzee:horizon-europe-expanded-template:1.0.0"):
     template_dir = os.path.join(os.path.dirname(__file__), '..', '..', 'project-templates', 'doc', 'document_template')
     shutil.copytree(template_dir, tmp_harvested_dir, dirs_exist_ok=True)
-    subprocess.check_call('dsw-tdk get datenzee:horizon-europe-expanded-template:1.0.0', shell=True,
+    subprocess.check_call(f'dsw-tdk get {dt_template_id}', shell=True,
                           cwd=tmp_harvested_dir)
 
 
-def harvest(harvest_dir):
+def harvest(harvest_dir, dt_template_id="datenzee:horizon-europe-expanded-template:1.0.0"):
     harvested_data = {}
     files = get_files(harvest_dir)
     parts_to_remove = [
         harvest_dir,
         '/src/components/gen/', '.html.jinja2',
-        '/datenzee_horizon-europe-expanded-template_1.0.0'
+        f'/{dt_template_id.replace(":", "_")}'
     ]
     for file in files:
         component = file

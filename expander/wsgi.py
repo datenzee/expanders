@@ -42,9 +42,10 @@ def expand():
             expander.post_expand()
         elif expander_type == 'doc':
             with tempfile.TemporaryDirectory() as tmp_harvested_dir:
-                download_harvested_files(tmp_harvested_dir)
-                harvested_data = harvest(tmp_harvested_dir)
-            expander = DocExpander(root_component, tmpdirname, harvested_data, input_data=data['content'])
+                download_harvested_files(tmp_harvested_dir, dt_template_id=data['template_id'])
+                harvested_data = harvest(tmp_harvested_dir, dt_template_id=data['template_id'])
+            expander = DocExpander(root_component, tmpdirname, harvested_data, input_data=data['content'],
+                                   dt_template_id=data['template_id'])
             expander.expand()
             expander.post_expand()
         else:
